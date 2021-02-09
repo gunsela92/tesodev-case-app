@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Service from "../Service/service";
 import logo from "../../assets/img/logo.png";
 import sorter from "../../assets/img/sorter.png";
@@ -8,6 +9,8 @@ const Fullsearch = () => {
   const [loading, setloading] = useState(false);
   const [warning, setwarning] = useState(false);
   const [disabled, setdisabled] = useState(true);
+  const [currentPage, setcurrentPage] = useState(1);
+  const [objectsPerPage] = useState(7);
 
   const handleSearch = async (data) => {
     let query = data.target.value;
@@ -26,6 +29,47 @@ const Fullsearch = () => {
     }
   };
 
+  const handleClick = (event) => {
+    setcurrentPage(Number(event.target.id));
+  };
+
+  const handleNext = () => {
+    setcurrentPage(Number(currentPage + 1));
+  };
+
+  const indexOfLastobject = currentPage * objectsPerPage;
+  const indexOfFirstobject = indexOfLastobject - objectsPerPage;
+  const currentObjects = tableData.slice(indexOfFirstobject, indexOfLastobject);
+
+  const renderObjects = currentObjects.map((object, index) => {
+    return (
+      <div key={index}>
+        <p>{object.name}</p>
+        <span>{object.title}</span>
+        <hr />
+      </div>
+    );
+  });
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(tableData.length / objectsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const renderPageNumbers = pageNumbers.map((number) => {
+    return (
+      <div key={number} className="pagination">
+        <span
+          className={currentPage === number ? "active" : ""}
+          id={number}
+          onClick={handleClick}
+        >
+          {number}
+        </span>
+      </div>
+    );
+  });
+
   const handleSelect = (data) => {
     if (tableData !== null) {
       var obj = [...tableData];
@@ -37,10 +81,26 @@ const Fullsearch = () => {
           settableData(obj.sort((a, b) => b.name.localeCompare(a.name)));
           break;
         case "3":
-          settableData(obj.sort((a, b) => a.createdAt.split('/').reverse().join().localeCompare(b.createdAt.split('/').reverse().join())));
+          settableData(
+            obj.sort((a, b) =>
+              a.createdAt
+                .split("/")
+                .reverse()
+                .join()
+                .localeCompare(b.createdAt.split("/").reverse().join())
+            )
+          );
           break;
         case "4":
-          settableData(obj.sort((a, b) => b.createdAt.split('/').reverse().join().localeCompare(a.createdAt.split('/').reverse().join())));
+          settableData(
+            obj.sort((a, b) =>
+              b.createdAt
+                .split("/")
+                .reverse()
+                .join()
+                .localeCompare(a.createdAt.split("/").reverse().join())
+            )
+          );
           break;
         default:
           break;
@@ -58,7 +118,8 @@ const Fullsearch = () => {
   return (
     <div style={{ position: "relative", height: "100vh", padding: "30px" }}>
       <div className="header">
-        <img src={logo} />
+      <Link to={"/"}>
+        <img src={logo} /></Link>
         <input
           className="fullSearch"
           type="text"
@@ -76,22 +137,28 @@ const Fullsearch = () => {
         </p>
       </div>
       <div className="sorter">
-      <img style={{position:"relative",top:"5px"}} src={sorter}/>
-        <select placeholder={"Order By"} disabled={disabled} onChange={handleSelect}>
+        <img style={{ position: "relative", top: "5px" }} src={sorter} />
+        <select
+          placeholder={"Order By"}
+          disabled={disabled}
+          onChange={handleSelect}
+        >
           {options.map((opt) => (
-            <option value={opt.id}>{opt.label}</option>
+            <option key={opt.id} value={opt.id}>
+              {opt.label}
+            </option>
           ))}
         </select>
       </div>
       <div className="table">
         <div hidden={!loading} className="loading"></div>
-        {tableData.map((obj) => (
-          <div key={obj.id}>
-            <p>{obj.name}</p>
-            <span>{obj.title}</span>
-            <hr />
-          </div>
-        ))}
+        <div>
+          {renderObjects}
+          <ul style={{ position: "relative",width:"80%" }} id="page-numbers">
+            {renderPageNumbers}
+          </ul>
+          <span style={{display: loading ? "none" : "inline-block"}} className="nextButton" onClick={handleNext}>Next</span>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Service from "../Service/service";
 
 const Mainpage = () => {
@@ -37,9 +38,10 @@ const Mainpage = () => {
               <hr />
             </div>
           ))}
+          <Link to={"/more"} style={{ textDecoration: 'none', color:"black" }}>
           <div style={{ textAlign: "center", cursor: "pointer" }}>
             <strong>Show more...</strong>
-          </div>
+          </div></Link>
         </div>
       </div>
     </div>
