@@ -10,11 +10,11 @@ const Fullsearch = () => {
   const [warning, setwarning] = useState(false);
   const [disabled, setdisabled] = useState(true);
   const [currentPage, setcurrentPage] = useState(1);
-  const [objectsPerPage] = useState(7);
+  const [objectsPerPage] = useState(6);
 
   const handleSearch = async (data) => {
     let query = data.target.value;
-    if (query.length >= 3) {
+    if (query !== undefined && query.length >= 3) {
       setloading(true);
       const res = await Service.searchData(query);
       setloading(false);
@@ -43,9 +43,9 @@ const Fullsearch = () => {
 
   const renderObjects = currentObjects.map((object, index) => {
     return (
-      <div key={index}>
-        <p>{object.name}</p>
-        <span>{object.title}</span>
+      <div key={index} className="objects">
+        <p>{object.title}</p>
+        <span>{object.name} - {object.createdAt.substring(0,4)}</span>
         <hr />
       </div>
     );
@@ -126,7 +126,7 @@ const Fullsearch = () => {
           placeholder={"Research in tech"}
           onChange={handleSearch}
         />
-        <button className="fullSearchButton">
+        <button className="fullSearchButton" onClick={handleSearch}>
           <label className="search">Search</label>
         </button>
         <p
