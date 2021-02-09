@@ -17,9 +17,9 @@
   background-image: url("./assets/img/logo.png");
   width: 278px;
   height: 115px;
-  margin: 0 auto;
   top: 256px;
   position: relative;
+  margin: 0 653px 0 509px;
 }
 
 .searchField {
@@ -37,15 +37,15 @@
   border: 1px solid #000000;
   box-sizing: border-box;
   border-radius: 8px;
-  top: 427px;
   text-align: center;
   font-weight: bold;
+  display: flex;
+  float: left;
 }
 
 .searchButton {
   width: 138px;
   height: 46px;
-  top: 427px;
   background: #204080;
   border-radius: 8px;
   color: white;
@@ -181,11 +181,18 @@
 
 .table {
   position: relative;
-  top: 7vh;
   width: 60%;
   left: 15%;
   height: 700px;
   overflow: auto;
+}
+
+.table p {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
 }
 
 .sorter {
@@ -236,19 +243,19 @@
 .pagination span {
   color: black;
   float: left;
-  padding: 8px 16px;
+  padding: 2px 8px;
   text-decoration: none;
   transition: background-color .3s;
   border: 1px solid #ddd;
-  margin: 0 4px;
-  border-radius: 10px;
+  margin: 0 3px;
+  border-radius: 5px;
 }
 
 .pagination span.active {
   background-color: #204080;
   color: white;
   border: 1px solid #204080;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .pagination span:hover:not(.active) {background-color: #ddd;}
@@ -256,16 +263,14 @@
 .nextButton {
   color: black;
   float: right;
-  padding: 8px 16px;
+  padding: 2px 28px;
   text-decoration: none;
   transition: background-color .3s;
   border: 1px solid #ddd;
-  margin: 0 4px;
-  border-radius: 10px;
-  display: block;
+  border-radius: 5px;
+  bottom: 0.5%;
+  left: 10px;
   position: relative;
-  bottom: 4.5vh;
-  right: 10%;
 }
 
 .nextButton:hover {

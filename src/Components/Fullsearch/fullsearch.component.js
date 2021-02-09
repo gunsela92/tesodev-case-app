@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Service from "../Service/service";
+import Service from "../../Service/service";
 import logo from "../../assets/img/logo.png";
 import sorter from "../../assets/img/sorter.png";
 
@@ -152,12 +152,12 @@ const Fullsearch = () => {
       </div>
       <div className="table">
         <div hidden={!loading} className="loading"></div>
-        <div>
+        <div style={{position:"relative"}}>
           {renderObjects}
           <ul style={{ position: "relative",width:"80%" }} id="page-numbers">
             {renderPageNumbers}
+            <span style={{display: renderPageNumbers.length > 0 ? "block" : "none"}} className="nextButton" onClick={handleNext}>Next</span>
           </ul>
-          <span style={{display: loading ? "none" : "inline-block"}} className="nextButton" onClick={handleNext}>Next</span>
         </div>
       </div>
     </div>

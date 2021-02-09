@@ -1,4 +1,4 @@
-import generatedData from "../../Data/generated.json";
+import generatedData from "../Data/generated.json";
 
 const searchData = (data) => {
   return generatedData.filter(item => {
